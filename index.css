@@ -5,15 +5,20 @@
     src: url('./assets/fonts/helvetica-outline.otf') format('opentype');
 }
 
-body {
-    background-color: orange;
-    color: #333;
+html {
+    box-sizing: border-box;
 }
 
-* {
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
+    background-color: orange;
+    color: #333;
 }
 
 .helvetica-outline {
@@ -29,6 +34,10 @@ body {
 #container .section {
     position: relative;
     margin-bottom: 4rem;
+
+    &.margin-top {
+        margin-top: 8em;
+    }
 }
 
 .hero {
@@ -42,13 +51,13 @@ body {
 .hero-image {
     width: min(440px, 100%);
     height: auto;
-    transition: all 0.3s ease-in-out;
+    transition: width 0.3s ease;
 }
 
 .hero h1 {
     flex: 1 1 320px;
-    text-align: right;
-    transition: all 0.3s ease-in-out;
+    transition: font-size 0.3s ease;
+    margin: 0;
 }
 
 @media (max-width: 950px) {
@@ -94,14 +103,42 @@ h1 {
 
 .card {
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     border: 2px solid #333;
     border-left: 12px solid #333;
     border-bottom: 12px solid #333;
-    padding: 18px;
+    padding: 12px 18px;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 0;
 }
 
 .tilt {
     display: inline-block;
     transform: rotate(-26deg);
+}
+
+#things-that-i-do {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+#things-that-i-do img {
+    flex: 1 1 calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    #things-that-i-do img {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
