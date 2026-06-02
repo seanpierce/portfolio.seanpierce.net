@@ -176,7 +176,7 @@ a {
 }
 
 .flex-container .flex-item {
-    flex: 1 1 ;
+    flex: 1 1 300px;
 }
 
 .card p {
@@ -246,7 +246,7 @@ a {
         font-size: var(--font-h1-tablet);
     }
 
-    flex-container .flex-item {
+    .flex-container .flex-item {
         flex: 1 1 100%;
     }
 
