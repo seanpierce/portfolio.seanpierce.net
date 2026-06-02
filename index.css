@@ -95,6 +95,11 @@ h3 {
     font-weight: 700;
 }
 
+a {
+    color: var(--color-dark);
+    font-weight: 700;
+}
+
 .orange {
     color: var(--color-bg);
 }
@@ -113,6 +118,14 @@ h3 {
     border-bottom: var(--border-width-thick) solid var(--color-dark);
     padding: var(--card-padding);
     font-size: var(--font-card);
+}
+
+.card.selected-project {
+    font-size: 18px;
+    margin-bottom: 18px;
+    padding-top: 0;
+    width: 100%;
+    max-width: none;
 }
 
 .hero {
@@ -191,6 +204,10 @@ h3 {
 
     flex-container .flex-item {
         flex: 1 1 100%;
+    }
+
+    .show-only-desktop {
+        display: none;
     }
 }
 
