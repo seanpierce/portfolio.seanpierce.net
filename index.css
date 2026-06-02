@@ -79,8 +79,12 @@ body {
     margin-bottom: var(--margin-section-bottom);
 }
 
-#container .section.margin-top {
+.margin-top {
     margin-top: var(--margin-section-top);
+}
+
+.margin-top.less {
+    margin-top: calc(var(--margin-section-top) / 2);
 }
 
 h1 {
@@ -120,8 +124,12 @@ a {
     font-size: var(--font-card);
 }
 
+.card.selected-project p {
+    margin: 0 0 1rem;
+}
+
 .card.selected-project {
-    font-size: 18px;
+    font-size: inherit;
     margin-bottom: 18px;
     padding-top: 0;
     width: 100%;
@@ -151,6 +159,11 @@ a {
     text-align: center;
 }
 
+.linkish {
+    cursor: pointer;
+    display: inline-block;
+}
+
 .down-arrow {
     width: 80px;
     height: auto;
@@ -168,6 +181,32 @@ a {
 
 .card p {
     margin: 0;
+}
+
+.read-more {
+    overflow: hidden;
+}
+
+.read-more-text {
+    max-height: 1.5em;
+    overflow: hidden;
+    line-height: 1.5;
+    transition: max-height 0.4s ease;
+}
+
+.read-more.expanded .read-more-text {
+    max-height: 1000px;
+}
+
+.read-more-toggle {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background: transparent;
+    border: none;
+    color: var(--color-dark);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
 }
 
 .tilt {
@@ -194,6 +233,11 @@ a {
     height: auto;
     object-fit: contain;
     box-sizing: border-box;
+}
+
+#git {
+    width: 100%;
+    max-width: 800px;
 }
 
 @media (max-width: 950px) {
@@ -233,6 +277,10 @@ a {
     #things-that-i-do img {
         flex: 1 1 100%;
         max-width: 100%;
+    }
+
+    .margin-top {
+        margin-top: calc(var(--margin-section-top) / 2);
     }
 }
 

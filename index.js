@@ -22,11 +22,19 @@ const ascii = `
 `;
 
 console.log(
-  '%c%s\n\n%c%s\n\n%c%s',
+  '%c%s\n\n%c%s\n\n%c%s\n%c%s\n%c%s',
   'font-family:monospace;color:inherit;',
   ascii,
   'font-size:32px;font-weight:bold;',
-  'Hey there, friend!',
+  'Hey there, comrade!',
   'font-size:16px;',
-  'If you have any questions about my portfolio, my work, or just want to chat, feel free to reach out! sumler.sean@gmail.com'
+  'If you have any questions about my portfolio, my work, or just want to chat, feel free to reach out!',
+  'font-size:16px;',
+  '--> sumler.sean@gmail.com',
+  'font-size:16px;',
+  '--> github.com/seanpierce'
 );
+
+const goTo = (link) => {
+    window.open(link, '_blank');
+}
