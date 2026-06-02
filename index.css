@@ -1,5 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap');
 
+:root {
+    /* Colors */
+    --color-dark: #333;
+    --color-bg: orange;
+
+    /* Breakpoints */
+    --bp-desktop: 950px;
+    --bp-tablet: 640px;
+    --bp-mobile: 440px;
+
+    /* Spacing */
+    --gap-lg: 2rem;
+    --gap-md: 1rem;
+    --padding-container: 8px;
+    --margin-section-bottom: 4rem;
+    --margin-section-top: 8em;
+    
+    /* Border */
+    --border-width-thick: 12px;
+    --border-width-thin: 2px;
+
+    /* Typography */
+    --font-h1-desktop: 200px;
+    --font-h1-tablet: 100px;
+    --font-h1-mobile: 60px;
+    --font-big: 10rem;
+    --font-card: 28px;
+    
+    /* Hero */
+    --hero-image-width: 440px;
+    --hero-image-width-mobile: 220px;
+    --hero-h1-flex-basis: 320px;
+
+    /* Layout */
+    --container-max-width: 1600px;
+    --card-max-width: 600px;
+    --card-padding: 18px 24px;
+}
+
 @font-face {
     font-family: 'HelveticaOutline';
     src: url('./assets/fonts/helvetica-outline.otf') format('opentype');
@@ -13,12 +52,16 @@ html {
     box-sizing: inherit;
 }
 
+h1, h2, h3, .hero-image {
+    transition: all 0.3s ease;
+}
+
 body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
-    /* background-color: orange; */
-    color: #333;
+    /* background-color: var(--color-bg); */
+    color: var(--color-dark);
 }
 
 .helvetica-outline {
@@ -26,73 +69,34 @@ body {
 }
 
 #container {
-    padding: 8px;
-    max-width: 1600px;
+    padding: var(--padding-container);
+    max-width: var(--container-max-width);
     margin: 0 auto;
 }
 
 #container .section {
     position: relative;
-    margin-bottom: 4rem;
-
-    &.margin-top {
-        margin-top: 8em;
-    }
+    margin-bottom: var(--margin-section-bottom);
 }
 
-.hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.hero-image {
-    width: min(440px, 100%);
-    height: auto;
-    transition: width 0.3s ease;
-}
-
-.hero h1 {
-    flex: 1 1 320px;
-    transition: font-size 0.3s ease;
-    margin: 0;
-}
-
-@media (max-width: 950px) {
-    .hero h1 {
-        font-size: 100px;
-    }
-}
-
-@media (max-width: 640px) {
-    .hero {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .hero-image {
-        width: min(220px, 100%);
-        margin: 0 auto;
-    }
-
-    .hero h1 {
-        text-align: left;
-    }
-}
-
-@media (max-width: 440px) {
-    .hero h1 {
-        font-size: 60px;
-    }
+#container .section.margin-top {
+    margin-top: var(--margin-section-top);
 }
 
 h1 {
-    font-size: 200px;
+    font-size: var(--font-h1-desktop);
     font-weight: 700;
     text-transform: uppercase;
     text-align: right;
+}
+
+h3 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.orange {
+    color: var(--color-bg);
 }
 
 .centered {
@@ -103,12 +107,50 @@ h1 {
 
 .card {
     width: 100%;
-    max-width: 600px;
-    border: 2px solid #333;
-    border-left: 12px solid #333;
-    border-bottom: 12px solid #333;
-    padding: 18px 24px;
-    font-size: 28px;
+    max-width: var(--card-max-width);
+    border: var(--border-width-thin) solid var(--color-dark);
+    border-left: var(--border-width-thick) solid var(--color-dark);
+    border-bottom: var(--border-width-thick) solid var(--color-dark);
+    padding: var(--card-padding);
+    font-size: var(--font-card);
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--gap-lg);
+    flex-wrap: wrap;
+}
+
+.hero-image {
+    width: min(var(--hero-image-width), 100%);
+    height: auto;
+}
+
+.hero h1 {
+    flex: 1 1 var(--hero-h1-flex-basis);
+    margin: 0;
+}
+
+.big {
+    font-size: var(--font-big);
+    text-align: center;
+}
+
+.down-arrow {
+    width: 80px;
+    height: auto;
+}
+
+.flex-container {
+    display: flex;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
+}
+
+.flex-container .flex-item {
+    flex: 1 1 ;
 }
 
 .card p {
@@ -120,39 +162,66 @@ h1 {
     transform: rotate(-26deg);
 }
 
+.tilt.forward {
+    display: inline-block !important;
+    transform: rotate(26deg);
+}
+
 #things-that-i-do {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--gap-md);
     justify-content: center;
 }
 
 #things-that-i-do img {
-    flex: 1 1 calc(50% - 1rem);
-    max-width: calc(50% - 1rem);
+    flex: 1 1 calc(50% - var(--gap-md));
+    max-width: calc(50% - var(--gap-md));
     width: 100%;
     height: auto;
     object-fit: contain;
     box-sizing: border-box;
 }
 
+@media (max-width: 950px) {
+    .hero h1,
+    .big {
+        font-size: var(--font-h1-tablet);
+    }
+
+    flex-container .flex-item {
+        flex: 1 1 100%;
+    }
+}
+
 @media (max-width: 640px) {
+    .hero {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .hero-image {
+        width: min(var(--hero-image-width-mobile), 100%);
+        margin: 0 auto;
+    }
+
+    .hero h1 {
+        text-align: right;
+    }
+
+    h2.big {
+        margin: 0;
+    }
+
     #things-that-i-do img {
         flex: 1 1 100%;
         max-width: 100%;
     }
 }
 
-.big {
-    font-size: 10rem;
-}
-
-.flex-container {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.flex-container .flex-item {
-    flex: 1 1 ;
+@media (max-width: 440px) {
+    .hero h1,
+    .big {
+        font-size: var(--font-h1-mobile);
+    }
 }
