@@ -1,6 +1,8 @@
-# portfolio.seanpierce.net
+# [portfolio.seanpierce.net](https://portfolio.seanpierce.net)
 
 A simple portfolio website for Sean Pierce Sumler (that's me).
+
+"I'm a creative technologist with over a decade of experience bringing projects from concept to completion for enterprise organizations. I've spent my career building, scaling, and modernizing software across a wide range of industries. **I've seen some things!**"
 
 ## Keeping it simple
 
