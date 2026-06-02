@@ -17,7 +17,7 @@ body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
-    background-color: orange;
+    /* background-color: orange; */
     color: #333;
 }
 
@@ -141,4 +141,18 @@ h1 {
         flex: 1 1 100%;
         max-width: 100%;
     }
+}
+
+.big {
+    font-size: 10rem;
+}
+
+.flex-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.flex-container .flex-item {
+    flex: 1 1 ;
 }
