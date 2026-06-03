@@ -292,3 +292,74 @@ a {
         font-size: var(--font-h1-mobile);
     }
 }
+
+body.reader-view {
+    margin: 2rem 0;
+}
+
+body.reader-view img {
+    display: none;
+}
+
+body.reader-view h1, 
+body.reader-view h2, 
+body.reader-view h3, 
+body.reader-view .helvetica-outline {
+    font-family: 'Roboto Mono', monospace !important;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+body.reader-view .card {
+    border: none;
+    padding: 0;
+}
+
+body.reader-view #container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+body.reader-view h1 {
+    font-size: 2.5rem;
+}
+
+body.reader-view h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+body.reader-view h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+body.reader-view h4 {
+    margin: 0.5rem 0;
+}
+
+body.reader-view .margin-top {
+    margin-top: 1rem;
+}
+
+body.reader-view p {
+    font-size: 1rem;
+}
+
+body.reader-view div.section {
+    display: inline-block;
+    margin: 0 auto !important;
+}
+
+body.reader-view .tilt, body.reader-view .tilt.forward {
+   transform: none;
+}
+
+body.reader-view .no-reader-view {
+    display: none;
+}
+
+body.reader-view .hero {
+    margin-bottom: 2rem;
+}
