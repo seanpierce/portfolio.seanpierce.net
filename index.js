@@ -23,15 +23,15 @@ const ascii = `
 
 console.log(
   '%c%s\n\n%c%s\n\n%c%s\n%c%s\n%c%s',
-  'font-family:monospace;color:inherit;',
+  'font-family:monospace;color:blue;',
   ascii,
-  'font-size:32px;font-weight:bold;',
+  'font-size:32px;font-weight:bold;color:blue;',
   'Hey there, comrade!',
-  'font-size:16px;',
+  'font-size:16px;color:blue;',
   'If you have any questions about my portfolio, my work, or just want to chat, feel free to reach out!',
-  'font-size:16px;',
+  'font-size:16px;color:blue;',
   '--> sumler.sean@gmail.com',
-  'font-size:16px;',
+  'font-size:16px;color:blue;',
   '--> github.com/seanpierce'
 );
 
