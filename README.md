@@ -8,6 +8,12 @@ A simple portfolio website displaing some of the professional and personal work 
 
 This site uses plain html, css, and js. No frameworks, no bloat, no dependencies. Frameworks and component libraries are great, I use them often, but you wouldn't use a chainsaw to cut a slice of bread.
 
+### Reader View
+
+In an effort to appeal to corporarte employers as well as design-focussed agencies, I've added a "Reader View" verison of the site. When in Reader View, images, are hidden, and all fonts are standardized. Animations and transforms are also removed.
+
+Reader View is auto-enabled if a user visits the site using a query param `?readerview=true`, _or_ if the referrer is from LinkedIn. Users may also manually toggle Reader View on or off using a CTA on the site. 
+
 ## DevOps and hosting
 
 This site is hosted on an Ubuntu cloud server and served using nginx. A Github Action is responsible for automated deployments ([see more in the wiki](https://github.com/seanpierce/portfolio.seanpierce.net/wiki/Deployments-via-GitHub-Actions)). Do less!
