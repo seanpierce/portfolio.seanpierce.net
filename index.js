@@ -59,13 +59,18 @@ const setReaderView = (enabled) => {
   if (enabled) {
     renderAltCaptions();
     setUrlParam(true);
+    setRVTButtonTitle(true);
   } else {
     removeAltCaptions();
     setUrlParam(false);
+    setRVTButtonTitle(false);
   }
 };
 
-const toggleReaderView = () => setReaderView(!isReaderViewEnabled());
+const toggleReaderView = () => {
+  setReaderView(!isReaderViewEnabled());
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 const enableReaderView = () => {
   if (!isReaderViewEnabled()) setReaderView(true);
@@ -88,6 +93,13 @@ const removeAltCaptions = () => {
   document.querySelectorAll(`.${ALT_CLASS}`)
     .forEach(el => el.remove());
 };
+
+const setRVTButtonTitle = (enabled) => {
+  const rvtButton = document.getElementById('reader-toggle');
+  enabled ?
+    rvtButton.title = 'Exit Reader View' :
+    rvtButton.title = 'Enable Reader View'
+}
 
 // --------------------
 // URL param handling
