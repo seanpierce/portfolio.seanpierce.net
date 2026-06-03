@@ -10,7 +10,7 @@ This site uses plain html, css, and js. No frameworks, no bloat, no dependencies
 
 ## DevOps and hosting
 
-This site is hosted on an Ubuntu cloud server and served using nginx. A Github Action is responsible for automated deployments (see more in the wiki). Do less!
+This site is hosted on an Ubuntu cloud server and served using nginx. A Github Action is responsible for automated deployments ([see more in the wiki]("https://github.com/seanpierce/portfolio.seanpierce.net/wiki/Deployments-via-GitHub-Actions")). Do less!
 
 ## Get in touch
 
