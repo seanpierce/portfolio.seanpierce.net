@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap');
 
+/* ==========================================================================
+   VARIABLES
+   ========================================================================== */
+
 :root {
     /* Colors */
     --color-dark: #333;
-    --color-bg: orange;
+    --color-accent: orange;
 
     /* Breakpoints */
     --bp-desktop: 950px;
@@ -16,8 +20,8 @@
     --padding-container: 8px;
     --margin-section-bottom: 4rem;
     --margin-section-top: 8em;
-    
-    /* Border */
+
+    /* Borders */
     --border-width-thick: 12px;
     --border-width-thin: 2px;
 
@@ -27,7 +31,7 @@
     --font-h1-mobile: 60px;
     --font-big: 10rem;
     --font-card: 28px;
-    
+
     /* Hero */
     --hero-image-width: 440px;
     --hero-image-width-mobile: 220px;
@@ -39,57 +43,60 @@
     --card-padding: 18px 24px;
 }
 
+/* ==========================================================================
+   FONTS
+   ========================================================================== */
+
 @font-face {
     font-family: 'HelveticaOutline';
     src: url('./assets/fonts/helvetica-outline.otf') format('opentype');
     font-display: swap;
 }
 
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
 html {
     box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: inherit;
 }
 
-h1, h2, h3, .hero-image {
-    transition: all 0.3s ease;
-}
-
 body {
-    font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
+    font-family: 'Roboto Mono', monospace;
     line-height: 1.5;
     scroll-behavior: smooth;
     color: var(--color-dark);
 }
 
-.helvetica-outline {
-    font-family: 'HelveticaOutline', sans-serif;
+a {
+    color: var(--color-dark);
+    font-weight: 700;
 }
 
-#container {
-    padding: var(--padding-container);
-    max-width: var(--container-max-width);
-    margin: 0 auto;
+h1,
+h2,
+h3,
+.hero-image {
+    transition:
+        font-size 0.3s ease,
+        width 0.3s ease,
+        transform 0.3s ease;
 }
 
-#container .section {
-    position: relative;
-    margin-bottom: var(--margin-section-bottom);
-}
-
-.margin-top {
-    margin-top: var(--margin-section-top);
-}
-
-.margin-top.less {
-    margin-top: calc(var(--margin-section-top) / 2);
-}
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
 
 h1 {
+    margin: 0;
     font-size: var(--font-h1-desktop);
     font-weight: 700;
     text-transform: uppercase;
@@ -101,59 +108,12 @@ h3 {
     font-weight: 700;
 }
 
-a {
-    color: var(--color-dark);
-    font-weight: 700;
+.helvetica-outline {
+    font-family: 'HelveticaOutline', sans-serif;
 }
 
 .orange {
-    color: var(--color-bg);
-}
-
-.centered {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card {
-    width: 100%;
-    max-width: var(--card-max-width);
-    border: var(--border-width-thin) solid var(--color-dark);
-    border-left: var(--border-width-thick) solid var(--color-dark);
-    border-bottom: var(--border-width-thick) solid var(--color-dark);
-    padding: var(--card-padding);
-    font-size: var(--font-card);
-}
-
-.card.selected-project p {
-    margin: 0 0 1rem;
-}
-
-.card.selected-project {
-    font-size: inherit;
-    margin-bottom: 18px;
-    padding-top: 0;
-    width: 100%;
-    max-width: none;
-}
-
-.hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--gap-lg);
-    flex-wrap: wrap;
-}
-
-.hero-image {
-    width: min(var(--hero-image-width), 100%);
-    height: auto;
-}
-
-.hero h1 {
-    flex: 1 1 var(--hero-h1-flex-basis);
-    margin: 0;
+    color: var(--color-accent);
 }
 
 .big {
@@ -161,28 +121,77 @@ a {
     text-align: center;
 }
 
-.linkish {
-    cursor: pointer;
-    display: inline-block;
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+#container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: var(--padding-container);
 }
 
-.down-arrow {
-    width: 80px;
+#container .section {
+    position: relative;
+    margin-bottom: var(--margin-section-bottom);
+}
+
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--gap-lg);
+}
+
+.hero h1 {
+    flex: 1 1 var(--hero-h1-flex-basis);
+}
+
+.hero-image {
+    width: min(var(--hero-image-width), 100%);
     height: auto;
 }
 
 .flex-container {
     display: flex;
-    gap: var(--gap-md);
     flex-wrap: wrap;
+    gap: var(--gap-md);
 }
 
 .flex-container .flex-item {
     flex: 1 1 300px;
 }
 
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+.card {
+    width: 100%;
+    max-width: var(--card-max-width);
+    padding: var(--card-padding);
+    font-size: var(--font-card);
+
+    border: var(--border-width-thin) solid var(--color-dark);
+    border-left-width: var(--border-width-thick);
+    border-bottom-width: var(--border-width-thick);
+}
+
 .card p {
     margin: 0;
+}
+
+.card.selected-project {
+    font-size: inherit;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 18px;
+    padding-top: 0;
+}
+
+.card.selected-project p {
+    margin-bottom: 1rem;
 }
 
 .read-more {
@@ -203,12 +212,42 @@ a {
 .read-more-toggle {
     display: inline-block;
     margin-top: 0.75rem;
+    padding: 0;
+
     background: transparent;
     border: none;
+
     color: var(--color-dark);
     font-weight: 700;
     cursor: pointer;
-    padding: 0;
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.margin-top {
+    margin-top: var(--margin-section-top);
+}
+
+.margin-top.less {
+    margin-top: calc(var(--margin-section-top) / 2);
+}
+
+.linkish {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.down-arrow {
+    width: 80px;
+    height: auto;
 }
 
 .tilt {
@@ -217,30 +256,36 @@ a {
 }
 
 .tilt.forward {
-    display: inline-block !important;
     transform: rotate(26deg);
 }
+
+/* ==========================================================================
+   SECTION-SPECIFIC
+   ========================================================================== */
 
 #things-that-i-do {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--gap-md);
     justify-content: center;
+    gap: var(--gap-md);
 }
 
 #things-that-i-do img {
     flex: 1 1 calc(50% - var(--gap-md));
-    max-width: calc(50% - var(--gap-md));
     width: 100%;
+    max-width: calc(50% - var(--gap-md));
     height: auto;
     object-fit: contain;
-    box-sizing: border-box;
 }
 
 #git {
     width: 100%;
     max-width: 800px;
 }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
 
 @media (max-width: 950px) {
     .hero h1,
@@ -249,7 +294,7 @@ a {
     }
 
     .flex-container .flex-item {
-        flex: 1 1 100%;
+        flex-basis: 100%;
     }
 
     .show-only-desktop {
@@ -277,7 +322,7 @@ a {
     }
 
     #things-that-i-do img {
-        flex: 1 1 100%;
+        flex-basis: 100%;
         max-width: 100%;
     }
 
@@ -293,6 +338,10 @@ a {
     }
 }
 
+/* ==========================================================================
+   READER VIEW
+   ========================================================================== */
+
 body.reader-view {
     margin: 2rem 0;
 }
@@ -301,18 +350,13 @@ body.reader-view img {
     display: none;
 }
 
-body.reader-view h1, 
-body.reader-view h2, 
-body.reader-view h3, 
+body.reader-view h1,
+body.reader-view h2,
+body.reader-view h3,
 body.reader-view .helvetica-outline {
     font-family: 'Roboto Mono', monospace !important;
     text-align: left;
     text-transform: uppercase;
-}
-
-body.reader-view .card {
-    border: none;
-    padding: 0;
 }
 
 body.reader-view #container {
@@ -321,30 +365,26 @@ body.reader-view #container {
     margin: 0 auto;
 }
 
-body.reader-view h1 {
-    font-size: 2.5rem;
+body.reader-view .card {
+    padding: 0;
+    border: none;
 }
 
-body.reader-view h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-body.reader-view h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-body.reader-view h4 {
-    margin: 0.5rem 0;
+body.reader-view .hero {
+    margin-bottom: 2rem;
 }
 
 body.reader-view .margin-top {
     margin-top: 1rem;
 }
 
-body.reader-view p {
-    font-size: 1rem;
+body.reader-view .no-reader-view {
+    display: none;
+}
+
+body.reader-view .tilt,
+body.reader-view .tilt.forward {
+    transform: none;
 }
 
 body.reader-view div.section {
@@ -352,14 +392,24 @@ body.reader-view div.section {
     margin: 0 auto !important;
 }
 
-body.reader-view .tilt, body.reader-view .tilt.forward {
-   transform: none;
+body.reader-view h1 {
+    font-size: 2.5rem;
 }
 
-body.reader-view .no-reader-view {
-    display: none;
+body.reader-view h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
 }
 
-body.reader-view .hero {
-    margin-bottom: 2rem;
+body.reader-view h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+body.reader-view h4 {
+    margin: 0.5rem 0;
+}
+
+body.reader-view p {
+    font-size: 1rem;
 }
