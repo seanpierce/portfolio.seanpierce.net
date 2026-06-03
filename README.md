@@ -16,7 +16,7 @@ Reader View is auto-enabled if a user visits the site using a query param `?read
 
 ### Dark Mode
 
-I've also added Dark Mode - because my eyes are tired and I'm willing to bet yours are, too. The funcitonality works similar to Reader View, with the exception that your selection (if you choose Dark Mode) will be remembered in local storage and recalled when you vist the site again. 
+I've also added Dark Mode - because my eyes are tired and I'm willing to bet yours are, too. Unlike Reader View, your Dark Mode preference will be saved to local storage and automatically restored the next time you visit the site.
 
 ## DevOps and hosting
 
