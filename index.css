@@ -42,6 +42,7 @@
 @font-face {
     font-family: 'HelveticaOutline';
     src: url('./assets/fonts/helvetica-outline.otf') format('opentype');
+    font-display: swap;
 }
 
 html {
@@ -60,7 +61,8 @@ body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
-    /* background-color: var(--color-bg); */
+    line-height: 1.5;
+    scroll-behavior: smooth;
     color: var(--color-dark);
 }
 
