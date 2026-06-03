@@ -45,9 +45,11 @@ const toggleReaderView = () => {
   if (isReaderViewEnabled) {
     document.body.classList.remove('reader-view');
     hideImageAltInDesignView();
+    removeReaderViewQueryFromUrl();
   } else {
     document.body.classList.add('reader-view');
     showImageAltInReaderView();
+    addReaderViewQueryToUrl();
   }
 };
 
@@ -71,6 +73,18 @@ const hideImageAltInDesignView = () => {
     h3.remove();
   });
 };
+
+const addReaderViewQueryToUrl = () => {
+  const url = new URL(window.location);
+  url.searchParams.set('readerview', 'true');
+  window.history.replaceState({}, '', url);
+}
+
+const removeReaderViewQueryFromUrl = () => {
+  const url = new URL(window.location);
+  url.searchParams.delete('readerview');
+  history.replaceState({}, '', url);
+}
 
 const initReaderViewFromQuery = () => {
   const params = new URLSearchParams(window.location.search);
