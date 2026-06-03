@@ -7,7 +7,7 @@
 :root {
     /* Colors */
     --color-dark: #333;
-    --color-accent: orange;
+    --color-accent: blue;
 
     /* Breakpoints */
     --bp-desktop: 950px;
@@ -307,11 +307,6 @@ h3 {
 }
 
 @media (max-width: 640px) {
-    .hero {
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
     .hero-image {
         width: min(var(--hero-image-width-mobile), 100%);
         margin: 0 auto;
@@ -422,15 +417,14 @@ body.reader-view p {
     position: fixed;
     bottom: 16px;
     left: 8px;
+    padding: 0.5rem;
     font-family: inherit;
-    background: white;
-    border: none;
-    color: var(--color-dark);
-    border: solid 1px;
+    background: var(--color-accent);
+    color: white;
     cursor: pointer;
     z-index: 9999;
+    border: none;
     border-radius: 50% ;
-    padding: 0.5rem;
 }
 
 #reader-toggle span {
