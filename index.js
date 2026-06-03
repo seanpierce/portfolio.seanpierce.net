@@ -1,4 +1,4 @@
-const ascii = `
+const ASCII = `
  ███████╗███████╗ █████╗ ███╗   ██╗
  ██╔════╝██╔════╝██╔══██╗████╗  ██║
  ███████╗█████╗  ███████║██╔██╗ ██║
@@ -24,7 +24,7 @@ const ascii = `
 console.log(
   '%c%s\n\n%c%s\n\n%c%s\n%c%s\n%c%s',
   'font-family:monospace;color:blue;',
-  ascii,
+  ASCII,
   'font-size:32px;font-weight:bold;color:blue;',
   'Hey there, comrade!',
   'font-size:16px;color:blue;',
@@ -35,71 +35,95 @@ console.log(
   '--> github.com/seanpierce'
 );
 
-const goTo = (link) => {
-    window.open(link, '_blank');
-};
+// --------------------
+// Navigation helper
+// --------------------
+const goTo = (link) => window.open(link, '_blank');
 
-const toggleReaderView = () => {
-  const isReaderViewEnabled = document.body.classList.contains('reader-view');
+// --------------------
+// Reader View State
+// --------------------
+const READER_CLASS = 'reader-view';
+const ALT_CLASS = 'reader-img-alt-caption';
+const PARAM = 'readerview';
 
-  if (isReaderViewEnabled) {
-    document.body.classList.remove('reader-view');
-    hideImageAltInDesignView();
-    removeReaderViewQueryFromUrl();
+// --------------------
+// Core toggle logic
+// --------------------
+const isReaderViewEnabled = () =>
+  document.body.classList.contains(READER_CLASS);
+
+const setReaderView = (enabled) => {
+  document.body.classList.toggle(READER_CLASS, enabled);
+
+  if (enabled) {
+    renderAltCaptions();
+    setUrlParam(true);
   } else {
-    document.body.classList.add('reader-view');
-    showImageAltInReaderView();
-    addReaderViewQueryToUrl();
+    removeAltCaptions();
+    setUrlParam(false);
   }
 };
+
+const toggleReaderView = () => setReaderView(!isReaderViewEnabled());
 
 const enableReaderView = () => {
-  if (!document.body.classList.contains('reader-view')) {
-    toggleReaderView();
+  if (!isReaderViewEnabled()) setReaderView(true);
+};
+
+// --------------------
+// Alt caption handling
+// --------------------
+const renderAltCaptions = () => {
+  document.querySelectorAll('img.show-alt-in-reader-view')
+    .forEach(img => {
+      const caption = document.createElement('h3');
+      caption.className = ALT_CLASS;
+      caption.textContent = img.alt;
+      img.after(caption);
+    });
+};
+
+const removeAltCaptions = () => {
+  document.querySelectorAll(`.${ALT_CLASS}`)
+    .forEach(el => el.remove());
+};
+
+// --------------------
+// URL param handling
+// --------------------
+const getUrl = () => new URL(window.location);
+
+const setUrlParam = (enabled) => {
+  const url = getUrl();
+  enabled
+    ? url.searchParams.set(PARAM, 'true')
+    : url.searchParams.delete(PARAM);
+
+  window.history.replaceState({}, '', url);
+};
+
+// --------------------
+// Init logic
+// --------------------
+const shouldEnableFromQuery = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(PARAM)?.toLowerCase() === 'true';
+};
+
+const shouldEnableFromReferrer = () => {
+  try {
+    return document.referrer
+      ? new URL(document.referrer).hostname.includes('linkedin.com')
+      : false;
+  } catch {
+    return false;
   }
 };
-
-const showImageAltInReaderView = () => {
-  document.querySelectorAll('img.show-alt-in-reader-view').forEach(img => {
-    const caption = document.createElement('h3');
-    caption.classList.add('reader-img-alt-caption');
-    caption.textContent = img.alt;
-    img.after(caption);
-  });
-};
-
-const hideImageAltInDesignView = () => {
-  document.querySelectorAll('h3.reader-img-alt-caption').forEach(h3 => {
-    h3.remove();
-  });
-};
-
-const addReaderViewQueryToUrl = () => {
-  const url = new URL(window.location);
-  url.searchParams.set('readerview', 'true');
-  window.history.replaceState({}, '', url);
-}
-
-const removeReaderViewQueryFromUrl = () => {
-  const url = new URL(window.location);
-  url.searchParams.delete('readerview');
-  history.replaceState({}, '', url);
-}
 
 const initReaderViewFromQuery = () => {
-  const params = new URLSearchParams(window.location.search);
-  const readerview = params.get('readerview');
-  const isEnabled = readerview?.toLowerCase() === 'true';
-
-  if (params.has('readerview') && isEnabled) {
-    enableReaderView();
-  }
-
-  const referrer = document.referrer;
-  const hostname = new URL(referrer).hostname;
-
-  if (hostname.includes('linkedin.com')) {
-    enableReaderView();
+  if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
+    setReaderView(true);
   }
 };
 
