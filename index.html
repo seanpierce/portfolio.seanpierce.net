@@ -62,7 +62,7 @@
                 <h1 class="helvetica-outline"><span class="tilt helvetica-outline">S</span>ean<br>Pierce<br>Sumler</h1>
             </div>
             <div class="centered">
-                <img class="down-arrow" 
+                <img class="down-arrow invert" 
                     src="./assets/images/arrow.webp" 
                     fetchpriority="high"
                     alt="An arrow pointing down towards more info about Sean Pierce Sumler">
@@ -86,15 +86,19 @@
             -->
              <img src="./assets/images/wid-1.webp"
                 loading="lazy"
+                class="invert"
                 alt="Design and visual systems">
              <img src="./assets/images/wid-2.webp"
                 loading="lazy"
+                class="invert"
                 alt="Front-end development and UI">
              <img src="./assets/images/wid-3.webp"
                 loading="lazy"
+                class="invert"
                 alt="Data pipelines and engineering">
              <img src="./assets/images/wid-4.webp"
                 loading="lazy"
+                class="invert"
                 alt="Creative coding and generative art">
          </div>
         </div>
@@ -141,7 +145,7 @@
 
         <div class="section margin-top">
             <img id="git" 
-                class="show-alt-in-reader-view" 
+                class="show-alt-in-reader-view invert" 
                 src="./assets/images/git.webp" 
                 alt="Get in touch">
 
@@ -153,11 +157,19 @@
         </div>
 
         <button id="reader-toggle" 
-            class="reader-toggle" 
+            class="ui-toggle" 
             aria-pressed="false" 
             title="Toggle Reader View"
             onclick="toggleReaderView()">
             <span>Aa</span>
+        </button>
+
+        <button id="dark-mode-toggle" 
+            class="ui-toggle" 
+            aria-pressed="false" 
+            title="Toggle Dark Mode"
+            onclick="toggleDarkMode()">
+            <span>Dm</span>
         </button>
     </div>
 

@@ -46,12 +46,16 @@ const goTo = (link) => window.open(link, '_blank');
 const READER_CLASS = 'reader-view';
 const ALT_CLASS = 'reader-img-alt-caption';
 const PARAM = 'readerview';
+const DARK_MODE = 'dark-mode';
 
 // --------------------
 // Core toggle logic
 // --------------------
 const isReaderViewEnabled = () =>
   document.body.classList.contains(READER_CLASS);
+
+const isDarkModeEnabled = () =>
+  document.body.classList.contains(DARK_MODE);
 
 const setReaderView = (enabled) => {
   document.body.classList.toggle(READER_CLASS, enabled);
@@ -66,6 +70,12 @@ const setReaderView = (enabled) => {
     setRVTButtonTitle(false);
   }
 };
+
+const toggleDarkMode = () => {
+  document.body.classList.toggle(DARK_MODE);
+  if (isDarkModeEnabled()) localStorage.setItem(DARK_MODE, 'true')
+  else localStorage.removeItem(DARK_MODE);
+}
 
 const toggleReaderView = () => {
   setReaderView(!isReaderViewEnabled());
@@ -133,10 +143,14 @@ const shouldEnableFromReferrer = () => {
   }
 };
 
-const initReaderViewFromQuery = () => {
+const init = () => {
   if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
     setReaderView(true);
   }
+
+  if (localStorage.getItem(DARK_MODE) && !isDarkModeEnabled()) {
+    toggleDarkMode();
+  }
 };
 
-initReaderViewFromQuery();
+init();
