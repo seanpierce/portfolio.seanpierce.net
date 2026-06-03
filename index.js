@@ -75,9 +75,16 @@ const hideImageAltInDesignView = () => {
 const initReaderViewFromQuery = () => {
   const params = new URLSearchParams(window.location.search);
   const readerview = params.get('readerview');
-  const isEnabled = readerview?.toLowerCase() === 'true' || readerview === '1';
+  const isEnabled = readerview?.toLowerCase() === 'true';
 
   if (params.has('readerview') && isEnabled) {
+    enableReaderView();
+  }
+
+  const referrer = document.referrer;
+  const hostname = new URL(referrer).hostname;
+
+  if (hostname.includes('linkedin.com')) {
     enableReaderView();
   }
 };
