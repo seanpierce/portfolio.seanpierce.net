@@ -104,6 +104,12 @@ const removeAltCaptions = () => {
     .forEach(el => el.remove());
 };
 
+const setRVTButtonTitle = (enabled) => {
+  const rvtButton = document.getElementById('reader-toggle');
+  enabled ?
+    rvtButton.title = 'Exit Reader View' :
+    rvtButton.title = 'Enable Reader View'
+}
 
 // --------------------
 // URL param handling
