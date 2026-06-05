@@ -104,6 +104,54 @@ const removeAltCaptions = () => {
     .forEach(el => el.remove());
 };
 
+const drawDotCanvas = () => {
+  const canvas = document.getElementById('dot-block-canvas');
+  if (!canvas) return;
+
+  const wrapper = canvas.parentElement;
+  if (!wrapper) return;
+
+  const widthPx = wrapper.clientWidth;
+  const heightPx = wrapper.clientHeight;
+  if (widthPx === 0 || heightPx === 0) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const width = Math.ceil(widthPx * dpr);
+  const height = Math.ceil(heightPx * dpr);
+
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  canvas.style.width = `${widthPx}px`;
+  canvas.style.height = `${heightPx}px`;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, widthPx, heightPx);
+
+  const style = getComputedStyle(canvas);
+  ctx.fillStyle = style.color || '#333';
+
+  const gap = 18;
+  const radius = 1.25;
+  const step = gap;
+  const offset = gap / 2;
+
+  for (let y = offset; y < heightPx; y += step) {
+    for (let x = offset; x < widthPx; x += step) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+};
+
+const dotResizeObserver = new ResizeObserver(() => drawDotCanvas());
+
 const setRVTButtonTitle = (enabled) => {
   const rvtButton = document.getElementById('reader-toggle');
   enabled ?
@@ -144,6 +192,15 @@ const shouldEnableFromReferrer = () => {
 };
 
 const init = () => {
+  drawDotCanvas();
+  window.addEventListener('resize', drawDotCanvas);
+
+  const canvas = document.getElementById('dot-block-canvas');
+  if (canvas) {
+    dotResizeObserver.observe(canvas);
+    if (canvas.parentElement) dotResizeObserver.observe(canvas.parentElement);
+  }
+
   if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
     setReaderView(true);
   }
