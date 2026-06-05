@@ -104,6 +104,18 @@ const removeAltCaptions = () => {
     .forEach(el => el.remove());
 };
 
+// --------------------
+// Interactive Dot Field
+// --------------------
+const dotField = {
+  dots: [],
+  mouse: {
+    x: -9999,
+    y: -9999
+  },
+  animationFrame: null
+};
+
 const drawDotCanvas = () => {
   const canvas = document.getElementById('dot-block-canvas');
   if (!canvas) return;
@@ -113,16 +125,13 @@ const drawDotCanvas = () => {
 
   const widthPx = wrapper.clientWidth;
   const heightPx = wrapper.clientHeight;
-  if (widthPx === 0 || heightPx === 0) return;
+
+  if (!widthPx || !heightPx) return;
 
   const dpr = window.devicePixelRatio || 1;
-  const width = Math.ceil(widthPx * dpr);
-  const height = Math.ceil(heightPx * dpr);
 
-  if (canvas.width !== width || canvas.height !== height) {
-    canvas.width = width;
-    canvas.height = height;
-  }
+  canvas.width = widthPx * dpr;
+  canvas.height = heightPx * dpr;
 
   canvas.style.width = `${widthPx}px`;
   canvas.style.height = `${heightPx}px`;
@@ -131,23 +140,75 @@ const drawDotCanvas = () => {
   if (!ctx) return;
 
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, widthPx, heightPx);
 
   const style = getComputedStyle(canvas);
-  ctx.fillStyle = style.color || '#333';
+  const color = style.color || '#333';
 
   const gap = 18;
   const radius = 1.25;
-  const step = gap;
-  const offset = gap / 2;
 
-  for (let y = offset; y < heightPx; y += step) {
-    for (let x = offset; x < widthPx; x += step) {
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fill();
+  dotField.dots = [];
+
+  for (let y = gap / 2; y < heightPx; y += gap) {
+    for (let x = gap / 2; x < widthPx; x += gap) {
+      dotField.dots.push({
+        ox: x,
+        oy: y,
+        x,
+        y,
+        vx: 0,
+        vy: 0
+      });
     }
   }
+
+  const animate = () => {
+    ctx.clearRect(0, 0, widthPx, heightPx);
+    ctx.fillStyle = color;
+
+    const mx = dotField.mouse.x;
+    const my = dotField.mouse.y;
+
+    for (const dot of dotField.dots) {
+      const dx = dot.x - mx;
+      const dy = dot.y - my;
+
+      const distance = Math.hypot(dx, dy);
+
+      const influenceRadius = 80;
+      const maxPush = 2;
+
+      if (distance > 0 && distance < influenceRadius) {
+        const force = (1 - distance / influenceRadius) ** 2;
+
+        dot.vx += (dx / distance) * force * maxPush;
+        dot.vy += (dy / distance) * force * maxPush;
+      }
+
+      // Spring force back to original position
+      dot.vx += (dot.ox - dot.x) * 0.02;
+      dot.vy += (dot.oy - dot.y) * 0.02;
+
+      // Friction
+      dot.vx *= 0.9;
+      dot.vy *= 0.9;
+
+      dot.x += dot.vx;
+      dot.y += dot.vy;
+
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    dotField.animationFrame = requestAnimationFrame(animate);
+  };
+
+  if (dotField.animationFrame) {
+    cancelAnimationFrame(dotField.animationFrame);
+  }
+
+  animate();
 };
 
 const dotResizeObserver = new ResizeObserver(() => drawDotCanvas());
@@ -196,9 +257,25 @@ const init = () => {
   window.addEventListener('resize', drawDotCanvas);
 
   const canvas = document.getElementById('dot-block-canvas');
+
   if (canvas) {
     dotResizeObserver.observe(canvas);
-    if (canvas.parentElement) dotResizeObserver.observe(canvas.parentElement);
+
+    if (canvas.parentElement) {
+      dotResizeObserver.observe(canvas.parentElement);
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+
+      dotField.mouse.x = e.clientX - rect.left;
+      dotField.mouse.y = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      dotField.mouse.x = -9999;
+      dotField.mouse.y = -9999;
+    });
   }
 
   if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
