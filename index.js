@@ -181,8 +181,15 @@ const drawDotCanvas = () => {
       if (distance > 0 && distance < influenceRadius) {
         const force = (1 - distance / influenceRadius) ** 2;
 
-        dot.vx += (dx / distance) * force * maxPush;
-        dot.vy += (dy / distance) * force * maxPush;
+        const nx = dx / distance;
+        const ny = dy / distance;
+
+        dot.vx += nx * force * maxPush;
+        dot.vy += ny * force * maxPush;
+
+        // rotational component
+        dot.vx += -ny * force * 0.5;
+        dot.vy += nx * force * 0.5;
       }
 
       // Spring force back to original position
