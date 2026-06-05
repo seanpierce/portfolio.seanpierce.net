@@ -162,11 +162,6 @@ h3 {
 
 .flex-container .flex-item {
     flex: 0 0 calc(50% - (var(--gap-md) / 2));
-    max-width: calc(50% - (var(--gap-md) / 2));
-    min-width: 0;
-}
-
-.flex-item.centered.no-reader-view {
     position: relative;
 }
 
@@ -414,6 +409,10 @@ body.reader-view .no-reader-view {
 body.reader-view .tilt,
 body.reader-view .tilt.forward {
     transform: none;
+}
+
+body.reader-view .flex-item {
+    flex: 0 0 100%;
 }
 
 body.reader-view div.section {
