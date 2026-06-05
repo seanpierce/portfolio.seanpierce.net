@@ -143,7 +143,7 @@ const shouldEnableFromReferrer = () => {
   }
 };
 
-const init = () => {
+const initScripts = () => {
   if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
     setReaderView(true);
   }
@@ -153,4 +153,4 @@ const init = () => {
   }
 };
 
-init();
+initScripts();
