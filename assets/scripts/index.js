@@ -104,128 +104,6 @@ const removeAltCaptions = () => {
     .forEach(el => el.remove());
 };
 
-// --------------------
-// Interactive Dot Field
-// --------------------
-const dotField = {
-  dots: [],
-  mouse: {
-    x: -9999,
-    y: -9999
-  },
-  animationFrame: null
-};
-
-const drawDotCanvas = () => {
-  const canvas = document.getElementById('dot-block-canvas');
-  if (!canvas) return;
-
-  const wrapper = canvas.parentElement;
-  if (!wrapper) return;
-
-  const widthPx = wrapper.clientWidth;
-  const heightPx = wrapper.clientHeight;
-
-  if (!widthPx || !heightPx) return;
-
-  const dpr = window.devicePixelRatio || 1;
-
-  canvas.width = widthPx * dpr;
-  canvas.height = heightPx * dpr;
-
-  canvas.style.width = `${widthPx}px`;
-  canvas.style.height = `${heightPx}px`;
-
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  const style = getComputedStyle(canvas);
-  const color = style.color || '#333';
-
-  const gap = 18;
-  const radius = 1.25;
-
-  dotField.dots = [];
-
-  for (let y = gap / 2; y < heightPx; y += gap) {
-    for (let x = gap / 2; x < widthPx; x += gap) {
-      dotField.dots.push({
-        ox: x,
-        oy: y,
-        x,
-        y,
-        vx: 0,
-        vy: 0
-      });
-    }
-  }
-
-  const animate = () => {
-    ctx.clearRect(0, 0, widthPx, heightPx);
-    ctx.fillStyle = color;
-
-    const mx = dotField.mouse.x;
-    const my = dotField.mouse.y;
-
-    for (const dot of dotField.dots) {
-      const dx = dot.x - mx;
-      const dy = dot.y - my;
-
-      const distance = Math.hypot(dx, dy);
-
-      const influenceRadius = 80;
-      const maxPush = 2;
-
-      if (distance > 0 && distance < influenceRadius) {
-        const force = (1 - distance / influenceRadius) ** 2;
-
-        const nx = dx / distance;
-        const ny = dy / distance;
-
-        dot.vx += nx * force * maxPush;
-        dot.vy += ny * force * maxPush;
-
-        // rotational component
-        dot.vx += -ny * force * 0.5;
-        dot.vy += nx * force * 0.5;
-      }
-
-      // Spring force back to original position
-      dot.vx += (dot.ox - dot.x) * 0.02;
-      dot.vy += (dot.oy - dot.y) * 0.02;
-
-      // Friction
-      dot.vx *= 0.9;
-      dot.vy *= 0.9;
-
-      dot.x += dot.vx;
-      dot.y += dot.vy;
-
-      ctx.beginPath();
-      ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    dotField.animationFrame = requestAnimationFrame(animate);
-  };
-
-  if (dotField.animationFrame) {
-    cancelAnimationFrame(dotField.animationFrame);
-  }
-
-  animate();
-};
-
-const dotResizeObserver = new ResizeObserver(() => drawDotCanvas());
-
-const setRVTButtonTitle = (enabled) => {
-  const rvtButton = document.getElementById('reader-toggle');
-  enabled ?
-    rvtButton.title = 'Exit Reader View' :
-    rvtButton.title = 'Enable Reader View'
-}
 
 // --------------------
 // URL param handling
@@ -259,32 +137,7 @@ const shouldEnableFromReferrer = () => {
   }
 };
 
-const init = () => {
-  drawDotCanvas();
-  window.addEventListener('resize', drawDotCanvas);
-
-  const canvas = document.getElementById('dot-block-canvas');
-
-  if (canvas) {
-    dotResizeObserver.observe(canvas);
-
-    if (canvas.parentElement) {
-      dotResizeObserver.observe(canvas.parentElement);
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-
-      dotField.mouse.x = e.clientX - rect.left;
-      dotField.mouse.y = e.clientY - rect.top;
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      dotField.mouse.x = -9999;
-      dotField.mouse.y = -9999;
-    });
-  }
-
+const initScripts = () => {
   if (shouldEnableFromQuery() || shouldEnableFromReferrer()) {
     setReaderView(true);
   }
@@ -294,4 +147,4 @@ const init = () => {
   }
 };
 
-init();
+initScripts();
