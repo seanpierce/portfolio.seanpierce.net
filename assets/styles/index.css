@@ -7,6 +7,7 @@
 :root {
     /* Colors */
     --color-dark: #333;
+    --color-bg: #F5F5F5;
     --color-accent: blue;
 
     /* Breakpoints */
@@ -74,6 +75,7 @@ body {
     line-height: 1.5;
     scroll-behavior: smooth;
     color: var(--color-dark);
+    background-color: var(--color-bg);
 }
 
 a {
@@ -89,6 +91,7 @@ h3,
         font-size 0.3s ease,
         width 0.3s ease,
         transform 0.3s ease;
+    line-height: normal;
 }
 
 /* ==========================================================================
