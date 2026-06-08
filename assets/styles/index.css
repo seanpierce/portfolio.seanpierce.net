@@ -212,6 +212,10 @@ h3 {
     margin-bottom: 1rem;
 }
 
+.card.selected-project h4 span {
+    font-weight: normal;
+}
+
 .read-more {
     overflow: hidden;
 }
