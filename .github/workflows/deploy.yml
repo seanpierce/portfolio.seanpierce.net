@@ -24,6 +24,7 @@ jobs:
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
 
             cd ~/www/portfolio.seanpierce.net
+            git checkout -- .
             git pull origin master
 
             VERSION=$(git rev-parse HEAD)
