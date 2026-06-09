@@ -20,7 +20,11 @@ I've also added Dark Mode - because my eyes are tired and I'm willing to bet you
 
 ## DevOps and hosting
 
-This site is hosted on an Ubuntu cloud server and served using nginx. A Github Action is responsible for automated deployments ([see more in the wiki](https://github.com/seanpierce/portfolio.seanpierce.net/wiki/Deployments-via-GitHub-Actions)). Do less!
+This site is hosted on an Ubuntu cloud server and served using Nginx. A Github Action is responsible for automated deployments ([see more in the wiki](https://github.com/seanpierce/portfolio.seanpierce.net/wiki/Deployments-via-GitHub-Actions)). Do less!
+
+## Asset Caching
+
+Static assets are cached aggressively via nginx cache headers. The Github `deploy` action contains a step that injects a commit-based version query string into asset references in HTML, enabling precise cache invalidation only when assets change.
 
 ## Get in touch
 
