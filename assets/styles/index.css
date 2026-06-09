@@ -223,30 +223,6 @@ h3 {
     overflow: hidden;
 }
 
-.read-more-text {
-    max-height: 1.5em;
-    overflow: hidden;
-    line-height: 1.5;
-    transition: max-height 0.4s ease;
-}
-
-.read-more.expanded .read-more-text {
-    max-height: 1000px;
-}
-
-.read-more-toggle {
-    display: inline-block;
-    margin-top: 0.75rem;
-    padding: 0;
-
-    background: transparent;
-    border: none;
-
-    color: var(--color-dark);
-    font-weight: 700;
-    cursor: pointer;
-}
-
 /* ==========================================================================
    UTILITIES
    ========================================================================== */
