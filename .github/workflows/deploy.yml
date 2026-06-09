@@ -17,28 +17,6 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build (minify with esbuild)
-        run: |
-          npm install esbuild
-
-          npx esbuild assets/scripts/scripts.js \
-            --minify \
-            --outfile=assets/scripts/scripts.js \
-            --allow-overwrite
-
-          npx esbuild assets/scripts/dots.js \
-            --minify \
-            --outfile=assets/scripts/dots.js \
-            --allow-overwrite
-
-          npx esbuild assets/styles/index.css \
-            --minify \
-            --outfile=assets/styles/index.css \
-            --allow-overwrite
-
       - name: Deploy via git pull
         run: |
           ssh -i ~/.ssh/id_ed25519 \
@@ -48,6 +26,23 @@ jobs:
             cd ~/www/portfolio.seanpierce.net
             git checkout -- .
             git pull origin master
+
+            npm install esbuild
+
+            npx esbuild assets/scripts/scripts.js \
+              --minify \
+              --outfile=assets/scripts/scripts.js \
+              --allow-overwrite
+
+            npx esbuild assets/scripts/dots.js \
+              --minify \
+              --outfile=assets/scripts/dots.js \
+              --allow-overwrite
+
+            npx esbuild assets/styles/index.css \
+              --minify \
+              --outfile=assets/styles/index.css \
+              --allow-overwrite
 
             VERSION=$(git rev-parse HEAD)
             sed -i "s/scripts.js/scripts.js?v=$VERSION/g" index.html
