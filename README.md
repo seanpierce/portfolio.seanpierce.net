@@ -18,13 +18,13 @@ Reader View is auto-enabled if a user visits the site using a query param `?read
 
 I've also added Dark Mode - because my eyes are tired and I'm willing to bet yours are, too. Unlike Reader View, your Dark Mode preference will be saved to local storage and automatically restored the next time you visit the site.
 
-## DevOps and hosting
+## DevOps and Hosting
 
 This site is hosted on an Ubuntu cloud server and served using Nginx. A Github Action is responsible for automated deployments ([see more in the wiki](https://github.com/seanpierce/portfolio.seanpierce.net/wiki/Deployments-via-GitHub-Actions)). Do less!
 
-## Asset Caching
+## Asset Caching and Minification
 
-Static assets are cached aggressively via nginx cache headers. The Github `deploy` action contains a step that injects a commit-based version query string into asset references in HTML, enabling precise cache invalidation only when assets change.
+Static assets are cached aggressively via nginx cache headers. The Github `deploy` action contains a step that injects a commit-based version query string into asset references in HTML, enabling precise cache invalidation only when assets change. Since this is a simple, static site, the action is also responsible for minification.
 
 ## Get in touch
 
