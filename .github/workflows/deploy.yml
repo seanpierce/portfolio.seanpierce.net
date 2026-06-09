@@ -19,15 +19,18 @@ jobs:
 
           npx esbuild assets/scripts/scripts.js \
             --minify \
-            --outfile=assets/scripts/scripts.js
+            --outfile=assets/scripts/scripts.js \
+            --allow-overwrite
 
           npx esbuild assets/scripts/dots.js \
             --minify \
-            --outfile=assets/scripts/dots.js
+            --outfile=assets/scripts/dots.js \
+            --allow-overwrite
 
           npx esbuild assets/styles/index.css \
             --minify \
-            --outfile=assets/styles/index.css
+            --outfile=assets/styles/index.css \
+            --allow-overwrite
 
       - name: Inject cache bust
         run: |
