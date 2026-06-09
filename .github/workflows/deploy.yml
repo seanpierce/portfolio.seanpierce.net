@@ -17,6 +17,9 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Build (minify with esbuild)
         run: |
           npm install esbuild
@@ -29,10 +32,10 @@ jobs:
             --minify \
             --outfile=assets/scripts/dots.js
 
-          npx esbuild assets/styles/index.js \
+          npx esbuild assets/styles/index.css \
             --minify \
-            --outfile=assets/styles/index.js
-            
+            --outfile=assets/styles/index.css
+
       - name: Deploy via git pull
         run: |
           ssh -i ~/.ssh/id_ed25519 \
