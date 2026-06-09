@@ -10,6 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build (minify with esbuild)
+        run: |
+          npm install esbuild
+
+          npx esbuild assets/scripts/scripts.js \
+            --minify \
+            --outfile=assets/scripts/scripts.js
+
+          npx esbuild assets/scripts/dots.js \
+            --minify \
+            --outfile=assets/scripts/dots.js
+
+          npx esbuild assets/styles/index.css \
+            --minify \
+            --outfile=assets/styles/index.css
+
+      - name: Inject cache bust
+        run: |
+          VERSION=${GITHUB_SHA}
+
+          sed -i "s|scripts.js|scripts.js?v=$VERSION|g" index.html
+          sed -i "s|dots.js|dots.js?v=$VERSION|g" index.html
+          sed -i "s|index.css|index.css?v=$VERSION|g" index.html
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -17,36 +44,8 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy via git pull
+      - name: Deploy (no git pull)
         run: |
-          ssh -i ~/.ssh/id_ed25519 \
-            -p ${{ 22 }} \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-
-            cd ~/www/portfolio.seanpierce.net
-            git checkout -- .
-            git pull origin master
-
-            npm install esbuild
-
-            npx esbuild assets/scripts/scripts.js \
-              --minify \
-              --outfile=assets/scripts/scripts.js \
-              --allow-overwrite
-
-            npx esbuild assets/scripts/dots.js \
-              --minify \
-              --outfile=assets/scripts/dots.js \
-              --allow-overwrite
-
-            npx esbuild assets/styles/index.css \
-              --minify \
-              --outfile=assets/styles/index.css \
-              --allow-overwrite
-
-            VERSION=$(git rev-parse HEAD)
-            sed -i "s/scripts.js/scripts.js?v=$VERSION/g" index.html
-            sed -i "s/dots.js/dots.js?v=$VERSION/g" index.html
-            sed -i "s/index.css/index.css?v=$VERSION/g" index.html
-
-          EOF
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519" \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/www/portfolio.seanpierce.net
